@@ -25,3 +25,10 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# Archivos generados por herramientas de análisis
+.scannerwork/
+
+# Archivos privados de configuración
+.env
+.env.*
+!.env.example

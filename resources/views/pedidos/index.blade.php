@@ -1,68 +1,106 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Pedidos')
 
-<h2>Pedidos</h2>
+@section('content_header')
+    <h1>Pedidos</h1>
+@stop
 
-<a href="{{ route('pedidos.create') }}"
-   class="btn btn-primary mb-3">
-   Nuevo Pedido
-</a>
+@section('content')
 
-<table class="table table-bordered">
+<div class="card">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Reserva</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    <div class="card-header">
+        <h3 class="card-title">
+            Pedidos registrados
+        </h3>
 
-    <tbody>
+        <div class="card-tools">
+            <a href="{{ route('pedidos.create') }}"
+               class="btn btn-primary btn-sm">
 
-    @foreach($pedidos as $pedido)
+                <i class="fas fa-plus"></i>
+                Nuevo Pedido
 
-    <tr>
-
-        <td>{{ $pedido->id_pedido }}</td>
-
-        <td>{{ $pedido->id_reserva }}</td>
-
-        <td>{{ $pedido->fecha_pedido }}</td>
-
-        <td>{{ $pedido->estado }}</td>
-
-        <td>
-
-            <a href="{{ route('pedidos.edit',$pedido->id_pedido) }}"
-               class="btn btn-warning">
-               Editar
             </a>
+        </div>
+    </div>
 
-            <form action="{{ route('pedidos.destroy',$pedido->id_pedido) }}"
-                  method="POST"
-                  style="display:inline">
+    <div class="card-body">
 
-                @csrf
-                @method('DELETE')
+        <table class="table table-bordered table-hover">
 
-                <button class="btn btn-danger">
-                    Eliminar
-                </button>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Reserva</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-            </form>
+            <tbody>
 
-        </td>
+                @foreach($pedidos as $pedido)
 
-    </tr>
+                    <tr>
 
-    @endforeach
+                        <td>
+                            {{ $pedido->id_pedido }}
+                        </td>
 
-    </tbody>
+                        <td>
+                            {{ $pedido->id_reserva }}
+                        </td>
 
-</table>
+                        <td>
+                            {{ $pedido->fecha_pedido }}
+                        </td>
 
-@endsection
+                        <td>
+                            {{ $pedido->estado }}
+                        </td>
+
+                        <td>
+
+                            <a href="{{ route('pedidos.edit', $pedido->id_pedido) }}"
+                               class="btn btn-warning btn-sm">
+
+                                <i class="fas fa-edit"></i>
+                                Editar
+
+                            </a>
+
+                            <form action="{{ route('pedidos.destroy', $pedido->id_pedido) }}"
+                                  method="POST"
+                                  style="display:inline">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+
+                                    <i class="fas fa-trash"></i>
+                                    Eliminar
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@stop

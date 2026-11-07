@@ -1,71 +1,110 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Reservas')
 
-<h2>Lista de Reservas</h2>
+@section('content_header') <h1>Lista de Reservas</h1>
+@stop
 
-<a href="{{ route('reservas.create') }}"
-   class="btn btn-success mb-3">
-   Nueva Reserva
-</a>
+@section('content')
 
-<table class="table table-bordered">
+<div class="card">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Cliente</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Total</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+```
+<div class="card-header">
+    <h3 class="card-title">
+        Reservas registradas
+    </h3>
 
-    <tbody>
+    <div class="card-tools">
+        <a href="{{ route('reservas.create') }}"
+           class="btn btn-success btn-sm">
+            <i class="fas fa-plus"></i>
+            Nueva Reserva
+        </a>
+    </div>
+</div>
 
-    @foreach($reservas as $reserva)
+<div class="card-body">
 
-        <tr>
+    <table class="table table-bordered table-hover">
 
-            <td>{{ $reserva->id_reserva }}</td>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-            <td>{{ $reserva->cliente->nombre }}</td>
+        <tbody>
 
-            <td>{{ $reserva->fecha_reserva }}</td>
+            @foreach($reservas as $reserva)
 
-            <td>{{ $reserva->estado }}</td>
+                <tr>
 
-            <td>{{ $reserva->total }}</td>
+                    <td>
+                        {{ $reserva->id_reserva }}
+                    </td>
 
-            <td>
+                    <td>
+                        {{ $reserva->cliente->nombre }}
+                    </td>
 
-                <a href="{{ route('reservas.edit',$reserva->id_reserva) }}"
-                   class="btn btn-warning">
-                    Editar
-                </a>
+                    <td>
+                        {{ $reserva->fecha_reserva }}
+                    </td>
 
-                <form action="{{ route('reservas.destroy',$reserva->id_reserva) }}"
-                      method="POST"
-                      style="display:inline">
+                    <td>
+                        {{ $reserva->estado }}
+                    </td>
 
-                    @csrf
-                    @method('DELETE')
+                    <td>
+                        {{ $reserva->total }}
+                    </td>
 
-                    <button class="btn btn-danger">
-                        Eliminar
-                    </button>
+                    <td>
 
-                </form>
+                        <a href="{{ route('reservas.edit', $reserva->id_reserva) }}"
+                           class="btn btn-warning btn-sm">
 
-            </td>
+                            <i class="fas fa-edit"></i>
+                            Editar
 
-        </tr>
+                        </a>
 
-    @endforeach
+                        <form action="{{ route('reservas.destroy', $reserva->id_reserva) }}"
+                              method="POST"
+                              style="display:inline">
 
-    </tbody>
+                            @csrf
+                            @method('DELETE')
 
-</table>
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
 
-@endsection
+                                <i class="fas fa-trash"></i>
+                                Eliminar
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            @endforeach
+
+        </tbody>
+
+    </table>
+
+</div>
+```
+
+</div>
+
+@stop

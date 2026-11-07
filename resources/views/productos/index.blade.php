@@ -1,75 +1,116 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Productos')
 
-<h2>Lista de Productos</h2>
+@section('content_header')
+    <h1>Lista de Productos</h1>
+@stop
 
-<a href="{{ route('productos.create') }}"
-   class="btn btn-success mb-3">
-    Nuevo Producto
-</a>
+@section('content')
 
-<table class="table table-bordered">
+<div class="card">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Talla</th>
-            <th>Color</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    <div class="card-header">
+        <h3 class="card-title">
+            Productos registrados
+        </h3>
 
-    <tbody>
+        <div class="card-tools">
+            <a href="{{ route('productos.create') }}"
+               class="btn btn-success btn-sm">
 
-    @foreach($productos as $producto)
+                <i class="fas fa-plus"></i>
+                Nuevo Producto
 
-        <tr>
+            </a>
+        </div>
+    </div>
 
-            <td>{{ $producto->id_producto }}</td>
+    <div class="card-body">
 
-            <td>{{ $producto->nombre }}</td>
+        <table class="table table-bordered table-hover">
 
-            <td>{{ $producto->talla }}</td>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Talla</th>
+                    <th>Color</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-            <td>{{ $producto->color }}</td>
+            <tbody>
 
-            <td>{{ $producto->precio }}</td>
+                @foreach($productos as $producto)
 
-            <td>{{ $producto->categoria->nombre }}</td>
+                    <tr>
 
-            <td>
+                        <td>
+                            {{ $producto->id_producto }}
+                        </td>
 
-                <a href="{{ route('productos.edit',$producto->id_producto) }}"
-                   class="btn btn-warning">
-                    Editar
-                </a>
+                        <td>
+                            {{ $producto->nombre }}
+                        </td>
 
-                <form
-                    action="{{ route('productos.destroy',$producto->id_producto) }}"
-                    method="POST"
-                    style="display:inline;">
+                        <td>
+                            {{ $producto->talla }}
+                        </td>
 
-                    @csrf
-                    @method('DELETE')
+                        <td>
+                            {{ $producto->color }}
+                        </td>
 
-                    <button class="btn btn-danger">
-                        Eliminar
-                    </button>
+                        <td>
+                            {{ $producto->precio }}
+                        </td>
 
-                </form>
+                        <td>
+                            {{ $producto->categoria->nombre }}
+                        </td>
 
-            </td>
+                        <td>
 
-        </tr>
+                            <a href="{{ route('productos.edit', $producto->id_producto) }}"
+                               class="btn btn-warning btn-sm">
 
-    @endforeach
+                                <i class="fas fa-edit"></i>
+                                Editar
 
-    </tbody>
+                            </a>
 
-</table>
+                            <form action="{{ route('productos.destroy', $producto->id_producto) }}"
+                                  method="POST"
+                                  style="display:inline;">
 
-@endsection
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+
+                                    <i class="fas fa-trash"></i>
+                                    Eliminar
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@stop

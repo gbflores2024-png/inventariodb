@@ -1,84 +1,156 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Editar Devolución')
 
-<h2>Nueva Devolución</h2>
+@section('content_header')
+    <h1>Editar Devolución</h1>
+@stop
 
-<form action="{{ route('devoluciones.store') }}"
-      method="POST">
+@section('content')
 
-    @csrf
+<div class="card">
 
-    <div class="mb-3">
+    <div class="card-header">
+        <h3 class="card-title">
+            Modificar Devolución
+        </h3>
+    </div>
 
-        <label>Venta</label>
+    <div class="card-body">
 
-        <select name="id_venta"
-                class="form-control">
+        <form action="{{ route('devoluciones.update', $devolucion->id_devolucion) }}"
+              method="POST">
 
-            @foreach($ventas as $venta)
+            @csrf
+            @method('PUT')
 
-            <option value="{{ $venta->id_venta }}">
-                {{ $venta->id_venta }}
-            </option>
+            <div class="form-group">
 
-            @endforeach
+                <label for="id_venta">
+                    Venta
+                </label>
 
-        </select>
+                <select name="id_venta"
+                        id="id_venta"
+                        class="form-control">
+
+                    @foreach($ventas as $venta)
+
+                        <option value="{{ $venta->id_venta }}"
+                            {{ $devolucion->id_venta == $venta->id_venta ? 'selected' : '' }}>
+
+                            {{ $venta->id_venta }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="id_producto">
+                    Producto
+                </label>
+
+                <select name="id_producto"
+                        id="id_producto"
+                        class="form-control">
+
+                    @foreach($productos as $producto)
+
+                        <option value="{{ $producto->id_producto }}"
+                            {{ $devolucion->id_producto == $producto->id_producto ? 'selected' : '' }}>
+
+                            {{ $producto->nombre }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="cantidad">
+                    Cantidad
+                </label>
+
+                <input type="number"
+                       id="cantidad"
+                       name="cantidad"
+                       class="form-control"
+                       value="{{ $devolucion->cantidad }}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="motivo">
+                    Motivo
+                </label>
+
+                <input type="text"
+                       id="motivo"
+                       name="motivo"
+                       class="form-control"
+                       value="{{ $devolucion->motivo }}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="estado">
+                    Estado
+                </label>
+
+                <input type="text"
+                       id="estado"
+                       name="estado"
+                       class="form-control"
+                       value="{{ $devolucion->estado }}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="fecha_devolucion">
+                    Fecha
+                </label>
+
+                <input type="date"
+                       id="fecha_devolucion"
+                       name="fecha_devolucion"
+                       class="form-control"
+                       value="{{ $devolucion->fecha_devolucion }}">
+
+            </div>
+
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+
+                <i class="fas fa-save"></i>
+                Actualizar
+
+            </button>
+
+            <a href="{{ route('devoluciones.index') }}"
+               class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+
+            </a>
+
+        </form>
 
     </div>
 
-    <div class="mb-3">
+</div>
 
-        <label>Producto</label>
-
-        <select name="id_producto"
-                class="form-control">
-
-            @foreach($productos as $producto)
-
-            <option value="{{ $producto->id_producto }}">
-                {{ $producto->nombre }}
-            </option>
-
-            @endforeach
-
-        </select>
-
-    </div>
-
-    <div class="mb-3">
-        <label>Cantidad</label>
-        <input type="number"
-               name="cantidad"
-               class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label>Motivo</label>
-        <input type="text"
-               name="motivo"
-               class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label>Estado</label>
-        <input type="text"
-               name="estado"
-               class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label>Fecha</label>
-        <input type="date"
-               name="fecha_devolucion"
-               class="form-control">
-    </div>
-
-    <button class="btn btn-success">
-        Guardar
-    </button>
-
-</form>
-
-@endsection
+@stop

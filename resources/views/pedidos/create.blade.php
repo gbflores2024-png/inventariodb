@@ -1,57 +1,220 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Nuevo Pedido')
 
-<h2>Nuevo Pedido</h2>
+@section('content_header')
+    <h1>Nuevo Pedido</h1>
+@stop
 
-<form action="{{ route('pedidos.store') }}"
-      method="POST">
+@section('content')
 
-    @csrf
+{{-- Mensajes de error --}}
+@if ($errors->any())
 
-    <div class="mb-3">
+    <div class="alert alert-danger">
 
-        <label>Reserva</label>
+        <h5>
+            <i class="fas fa-exclamation-triangle"></i>
+            Se encontraron errores
+        </h5>
 
-        <select name="id_reserva"
-                class="form-control">
+        <ul class="mb-0">
 
-            @foreach($reservas as $reserva)
+            @foreach ($errors->all() as $error)
 
-            <option value="{{ $reserva->id_reserva }}">
-                {{ $reserva->id_reserva }}
-            </option>
+                <li>{{ $error }}</li>
 
             @endforeach
 
-        </select>
+        </ul>
 
     </div>
 
-    <div class="mb-3">
+@endif
 
-        <label>Fecha Pedido</label>
 
-        <input type="date"
-               name="fecha_pedido"
-               class="form-control">
+<div class="card">
 
-    </div>
+    <div class="card-header">
 
-    <div class="mb-3">
+        <h3 class="card-title">
 
-        <label>Estado</label>
+            <i class="fas fa-shopping-cart"></i>
 
-        <input type="text"
-               name="estado"
-               class="form-control">
+            Registrar nuevo pedido
+
+        </h3>
 
     </div>
 
-    <button class="btn btn-success">
-        Guardar
-    </button>
 
-</form>
+    <div class="card-body">
 
-@endsection
+        <form action="{{ route('pedidos.store') }}"
+              method="POST">
+
+            @csrf
+
+
+            {{-- =====================================================
+                 RESERVA
+                 ===================================================== --}}
+
+            <div class="form-group">
+
+                <label for="id_reserva">
+
+                    <i class="fas fa-calendar-check"></i>
+
+                    Reserva <span class="text-danger">*</span>
+
+                </label>
+
+                <select name="id_reserva"
+                        id="id_reserva"
+                        class="form-control"
+                        required>
+
+                    <option value="">
+                        -- Seleccione una reserva --
+                    </option>
+
+
+                    @foreach($reservas as $reserva)
+
+                        <option value="{{ $reserva->id_reserva }}">
+
+                            Reserva #{{ $reserva->id_reserva }}
+
+                            -
+
+                            {{ $reserva->cliente->nombre ?? 'Cliente no registrado' }}
+
+                            -
+
+                            Bs. {{ number_format($reserva->total, 2) }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+
+            {{-- =====================================================
+                 FECHA
+                 ===================================================== --}}
+
+            <div class="form-group">
+
+                <label for="fecha_pedido">
+
+                    <i class="fas fa-calendar"></i>
+
+                    Fecha del pedido
+                    <span class="text-danger">*</span>
+
+                </label>
+
+                <input type="date"
+                       id="fecha_pedido"
+                       name="fecha_pedido"
+                       class="form-control"
+                       value="{{ old('fecha_pedido', date('Y-m-d')) }}"
+                       required>
+
+            </div>
+
+
+            {{-- =====================================================
+                 ESTADO
+                 ===================================================== --}}
+
+            <div class="form-group">
+
+                <label for="estado">
+
+                    <i class="fas fa-tasks"></i>
+
+                    Estado
+                    <span class="text-danger">*</span>
+
+                </label>
+
+                <select name="estado"
+                        id="estado"
+                        class="form-control"
+                        required>
+
+                    <option value="">
+                        -- Seleccione un estado --
+                    </option>
+
+                    <option value="PREPARANDO"
+                        {{ old('estado') == 'PREPARANDO' ? 'selected' : '' }}>
+
+                        PREPARANDO
+
+                    </option>
+
+                    <option value="LISTO_RECOJO"
+                        {{ old('estado') == 'LISTO_RECOJO' ? 'selected' : '' }}>
+
+                        LISTO PARA RECOJO
+
+                    </option>
+
+                    <option value="ENTREGADO"
+                        {{ old('estado') == 'ENTREGADO' ? 'selected' : '' }}>
+
+                        ENTREGADO
+
+                    </option>
+
+                    <option value="CANCELADO"
+                        {{ old('estado') == 'CANCELADO' ? 'selected' : '' }}>
+
+                        CANCELADO
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <hr>
+
+
+            {{-- =====================================================
+                 BOTONES
+                 ===================================================== --}}
+
+            <button type="submit"
+                    class="btn btn-success">
+
+                <i class="fas fa-save"></i>
+
+                Guardar Pedido
+
+            </button>
+
+
+            <a href="{{ route('pedidos.index') }}"
+               class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+
+                Cancelar
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+@stop

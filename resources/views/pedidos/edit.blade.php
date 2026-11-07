@@ -1,63 +1,103 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Editar Pedido')
 
-<h2>Editar Pedido</h2>
+@section('content_header')
+    <h1>Editar Pedido</h1>
+@stop
 
-<form action="{{ route('pedidos.update',$pedido->id_pedido) }}"
-      method="POST">
+@section('content')
 
-    @csrf
-    @method('PUT')
+<div class="card">
 
-    <div class="mb-3">
+    <div class="card-header">
+        <h3 class="card-title">
+            Modificar Pedido
+        </h3>
+    </div>
 
-        <label>Reserva</label>
+    <div class="card-body">
 
-        <select name="id_reserva"
-                class="form-control">
+        <form action="{{ route('pedidos.update', $pedido->id_pedido) }}"
+              method="POST">
 
-            @foreach($reservas as $reserva)
+            @csrf
+            @method('PUT')
 
-            <option value="{{ $reserva->id_reserva }}"
-                {{ $pedido->id_reserva == $reserva->id_reserva ? 'selected' : '' }}>
+            <div class="form-group">
 
-                {{ $reserva->id_reserva }}
+                <label for="id_reserva">
+                    Reserva
+                </label>
 
-            </option>
+                <select name="id_reserva"
+                        id="id_reserva"
+                        class="form-control">
 
-            @endforeach
+                    @foreach($reservas as $reserva)
 
-        </select>
+                        <option value="{{ $reserva->id_reserva }}"
+                            {{ $pedido->id_reserva == $reserva->id_reserva ? 'selected' : '' }}>
+
+                            {{ $reserva->id_reserva }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="fecha_pedido">
+                    Fecha Pedido
+                </label>
+
+                <input type="date"
+                       id="fecha_pedido"
+                       name="fecha_pedido"
+                       class="form-control"
+                       value="{{ $pedido->fecha_pedido }}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="estado">
+                    Estado
+                </label>
+
+                <input type="text"
+                       id="estado"
+                       name="estado"
+                       class="form-control"
+                       value="{{ $pedido->estado }}">
+
+            </div>
+
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+
+                <i class="fas fa-save"></i>
+                Actualizar
+
+            </button>
+
+            <a href="{{ route('pedidos.index') }}"
+               class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+
+            </a>
+
+        </form>
 
     </div>
 
-    <div class="mb-3">
+</div>
 
-        <label>Fecha Pedido</label>
-
-        <input type="date"
-               name="fecha_pedido"
-               class="form-control"
-               value="{{ $pedido->fecha_pedido }}">
-
-    </div>
-
-    <div class="mb-3">
-
-        <label>Estado</label>
-
-        <input type="text"
-               name="estado"
-               class="form-control"
-               value="{{ $pedido->estado }}">
-
-    </div>
-
-    <button class="btn btn-primary">
-        Actualizar
-    </button>
-
-</form>
-
-@endsection
+@stop

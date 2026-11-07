@@ -1,73 +1,149 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Nuevo Producto')
 
-<h2>Nuevo Producto</h2>
+@section('content_header')
+    <h1>Nuevo Producto</h1>
+@stop
 
-<form action="{{ route('productos.store') }}"
-      method="POST">
+@section('content')
 
-    @csrf
+<div class="card">
 
-    <div class="mb-3">
-        <label>Nombre</label>
-        <input type="text"
-               name="nombre"
-               class="form-control">
+    <div class="card-header">
+        <h3 class="card-title">
+            Registrar Producto
+        </h3>
     </div>
 
-    <div class="mb-3">
-        <label>Descripción</label>
-        <input type="text"
-               name="descripcion"
-               class="form-control">
-    </div>
+    <div class="card-body">
 
-    <div class="mb-3">
-        <label>Talla</label>
-        <input type="text"
-               name="talla"
-               class="form-control">
-    </div>
+        <form action="{{ route('productos.store') }}"
+              method="POST">
 
-    <div class="mb-3">
-        <label>Color</label>
-        <input type="text"
-               name="color"
-               class="form-control">
-    </div>
-
-    <div class="mb-3">
-        <label>Precio</label>
-        <input type="number"
-               step="0.01"
-               name="precio"
-               class="form-control">
-    </div>
-
-    <div class="mb-3">
-
-        <label>Categoría</label>
-
-        <select name="id_categoria"
-                class="form-control">
-
-            @foreach($categorias as $categoria)
-
-                <option value="{{ $categoria->id_categoria }}">
-                    {{ $categoria->nombre }}
-                </option>
-
+            @csrf
+        @if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>No se pudo registrar el producto.</strong>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
             @endforeach
+        </ul>
+    </div>
+@endif
+            <div class="form-group">
 
-        </select>
+                <label for="nombre">
+                    Nombre
+                </label>
+
+                <input type="text"
+                       id="nombre"
+                       name="nombre"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="descripcion">
+                    Descripción
+                </label>
+
+                <input type="text"
+                       id="descripcion"
+                       name="descripcion"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="talla">
+                    Talla
+                </label>
+
+                <input type="text"
+                       id="talla"
+                       name="talla"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="color">
+                    Color
+                </label>
+
+                <input type="text"
+                       id="color"
+                       name="color"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="precio">
+                    Precio
+                </label>
+
+                <input type="number"
+                       id="precio"
+                       step="0.01"
+                       name="precio"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="id_categoria">
+                    Categoría
+                </label>
+
+                <select name="id_categoria"
+                        id="id_categoria"
+                        class="form-control">
+
+                    @foreach($categorias as $categoria)
+
+                        <option value="{{ $categoria->id_categoria }}">
+
+                            {{ $categoria->nombre }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <br>
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="fas fa-save"></i>
+                Guardar
+
+            </button>
+
+            <a href="{{ route('productos.index') }}"
+               class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+
+            </a>
+
+        </form>
 
     </div>
 
-    <button class="btn btn-primary">
-        Guardar
-    </button>
+</div>
 
-</form>
-
-@endsection
+@stop

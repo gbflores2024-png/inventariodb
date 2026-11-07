@@ -1,39 +1,64 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Nueva Categoría')
 
-<h2>Nueva Categoría</h2>
+@section('content_header')
+    <h1>Nueva Categoría</h1>
+@stop
 
-<form action="{{ route('categorias.store') }}" method="POST">
+@section('content')
 
-    @csrf
+<div class="card">
 
-    <div class="mb-3">
+    <div class="card-header">
+        <h3 class="card-title">
+            Registrar Categoría
+        </h3>
+    </div>
 
-        <label class="form-label">
-            Nombre
-        </label>
+    <div class="card-body">
 
-        <input type="text"
-               name="nombre"
-               class="form-control">
+        <form action="{{ route('categorias.store') }}"
+              method="POST">
+
+            @csrf
+
+            <div class="form-group">
+
+                <label for="nombre">
+                    Nombre
+                </label>
+
+                <input type="text"
+                       id="nombre"
+                       name="nombre"
+                       class="form-control"
+                       required>
+
+            </div>
+
+            <br>
+
+            <button type="submit"
+                    class="btn btn-success">
+
+                <i class="fas fa-save"></i>
+                Guardar
+
+            </button>
+
+            <a href="{{ route('categorias.index') }}"
+               class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+
+            </a>
+
+        </form>
 
     </div>
 
-    <button type="submit"
-            class="btn btn-success">
+</div>
 
-        Guardar
-
-    </button>
-
-    <a href="{{ route('categorias.index') }}"
-       class="btn btn-secondary">
-
-       Cancelar
-
-    </a>
-
-</form>
-
-@endsection
+@stop

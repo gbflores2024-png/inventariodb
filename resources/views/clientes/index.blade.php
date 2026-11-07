@@ -1,67 +1,110 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Clientes')
 
-<h2>Lista de Clientes</h2>
+@section('content_header') <h1>Lista de Clientes</h1>
+@stop
 
-<a href="{{ route('clientes.create') }}"
-   class="btn btn-success mb-3">
-   Nuevo Cliente
-</a>
+@section('content')
 
-<table class="table table-bordered">
+<div class="card">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Dirección</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
 
-    <tbody>
+<div class="card-header">
+    <h3 class="card-title">
+        Clientes registrados
+    </h3>
 
-    @foreach($clientes as $cliente)
+    <div class="card-tools">
+        <a href="{{ route('clientes.create') }}"
+           class="btn btn-success btn-sm">
+            <i class="fas fa-user-plus"></i>
+            Nuevo Cliente
+        </a>
+    </div>
+</div>
 
-        <tr>
+<div class="card-body">
 
-            <td>{{ $cliente->id_cliente }}</td>
-            <td>{{ $cliente->nombre }}</td>
-            <td>{{ $cliente->email }}</td>
-            <td>{{ $cliente->telefono }}</td>
-            <td>{{ $cliente->direccion }}</td>
+    <table class="table table-bordered table-hover">
 
-            <td>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
 
-                <a href="{{ route('clientes.edit',$cliente->id_cliente) }}"
-                   class="btn btn-warning">
-                    Editar
-                </a>
+        <tbody>
 
-                <form action="{{ route('clientes.destroy',$cliente->id_cliente) }}"
-                      method="POST"
-                      style="display:inline">
+            @foreach($clientes as $cliente)
 
-                    @csrf
-                    @method('DELETE')
+                <tr>
 
-                    <button class="btn btn-danger">
-                        Eliminar
-                    </button>
+                    <td>
+                        {{ $cliente->id_cliente }}
+                    </td>
 
-                </form>
+                    <td>
+                        {{ $cliente->nombre }}
+                    </td>
 
-            </td>
+                    <td>
+                        {{ $cliente->email }}
+                    </td>
 
-        </tr>
+                    <td>
+                        {{ $cliente->telefono }}
+                    </td>
 
-    @endforeach
+                    <td>
+                        {{ $cliente->direccion }}
+                    </td>
 
-    </tbody>
+                    <td>
 
-</table>
+                        <a href="{{ route('clientes.edit', $cliente->id_cliente) }}"
+                           class="btn btn-warning btn-sm">
 
-@endsection
+                            <i class="fas fa-edit"></i>
+                            Editar
+
+                        </a>
+
+                        <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}"
+                              method="POST"
+                              style="display:inline">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
+
+                                <i class="fas fa-trash"></i>
+                                Eliminar
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            @endforeach
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+</div>
+
+@stop

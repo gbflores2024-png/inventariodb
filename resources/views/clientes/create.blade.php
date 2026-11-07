@@ -1,46 +1,101 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Nuevo Cliente')
 
-<h2>Nuevo Cliente</h2>
+@section('content_header')
+    <h1>Nuevo Cliente</h1>
+@stop
 
-<form action="{{ route('clientes.store') }}"
-      method="POST">
+@section('content')
 
-    @csrf
+<div class="card">
 
-    <div class="mb-3">
-        <label>Nombre</label>
-        <input type="text"
-               name="nombre"
-               class="form-control">
+    <div class="card-header">
+        <h3 class="card-title">
+            Registrar Cliente
+        </h3>
     </div>
 
-    <div class="mb-3">
-        <label>Email</label>
-        <input type="email"
-               name="email"
-               class="form-control">
+    <div class="card-body">
+
+        <form action="{{ route('clientes.store') }}"
+              method="POST">
+
+            @csrf
+
+            <div class="form-group">
+
+                <label for="nombre">
+                    Nombre
+                </label>
+
+                <input type="text"
+                       id="nombre"
+                       name="nombre"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="telefono">
+                    Teléfono
+                </label>
+
+                <input type="text"
+                       id="telefono"
+                       name="telefono"
+                       class="form-control">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="direccion">
+                    Dirección
+                </label>
+
+                <input type="text"
+                       id="direccion"
+                       name="direccion"
+                       class="form-control">
+
+            </div>
+
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+
+                <i class="fas fa-save"></i>
+                Guardar
+
+            </button>
+
+            <a href="{{ route('clientes.index') }}"
+               class="btn btn-secondary">
+
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+
+            </a>
+
+        </form>
+
     </div>
 
-    <div class="mb-3">
-        <label>Teléfono</label>
-        <input type="text"
-               name="telefono"
-               class="form-control">
-    </div>
+</div>
 
-    <div class="mb-3">
-        <label>Dirección</label>
-        <input type="text"
-               name="direccion"
-               class="form-control">
-    </div>
-
-    <button class="btn btn-primary">
-        Guardar
-    </button>
-
-</form>
-
-@endsection
+@stop

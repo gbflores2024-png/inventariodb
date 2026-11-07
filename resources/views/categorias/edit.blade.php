@@ -1,34 +1,59 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Editar Categoría')
 
-<h2>Editar Categoría</h2>
+@section('content_header')
+    <h1>Editar Categoría</h1>
+@stop
 
-<form action="{{ route('categorias.update', $categoria->id_categoria) }}"
-      method="POST">
+@section('content')
 
-    @csrf
-    @method('PUT')
+<div class="card">
 
-    <div class="mb-3">
-        <label class="form-label">Nombre</label>
-
-        <input type="text"
-               name="nombre"
-               class="form-control"
-               value="{{ $categoria->nombre }}"
-               required>
+    <div class="card-header">
+        <h3 class="card-title">
+            Modificar Categoría
+        </h3>
     </div>
 
-    <button type="submit" class="btn btn-primary">
-        Actualizar
-    </button>
+    <div class="card-body">
 
-    <a href="{{ route('categorias.index') }}"
-       class="btn btn-secondary">
-        Cancelar
-    </a>
+        <form action="{{ route('categorias.update', $categoria->id_categoria) }}"
+              method="POST">
 
-</form>
+            @csrf
+            @method('PUT')
 
-@endsection
+            <div class="form-group">
+                <label for="nombre">
+                    Nombre
+                </label>
+
+                <input type="text"
+                       id="nombre"
+                       name="nombre"
+                       class="form-control"
+                       value="{{ $categoria->nombre }}"
+                       required>
+            </div>
+
+            <br>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Actualizar
+            </button>
+
+            <a href="{{ route('categorias.index') }}"
+               class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+@stop

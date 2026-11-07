@@ -1,74 +1,116 @@
-@extends('welcome')
+@extends('adminlte::page')
 
-@section('contenido')
+@section('title', 'Devoluciones')
 
-<h2>Devoluciones</h2>
+@section('content_header')
+    <h1>Devoluciones</h1>
+@stop
 
-<a href="{{ route('devoluciones.create') }}"
-   class="btn btn-primary mb-3">
-   Nueva Devolución
-</a>
+@section('content')
 
-<table class="table table-bordered">
+<div class="card">
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Venta</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Estado</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
+    <div class="card-header">
+        <h3 class="card-title">
+            Devoluciones registradas
+        </h3>
 
-    <tbody>
+        <div class="card-tools">
+            <a href="{{ route('devoluciones.create') }}"
+               class="btn btn-primary btn-sm">
 
-    @foreach($devoluciones as $devolucion)
+                <i class="fas fa-undo"></i>
+                Nueva Devolución
 
-    <tr>
-
-        <td>{{ $devolucion->id_devolucion }}</td>
-
-        <td>{{ $devolucion->id_venta }}</td>
-
-        <td>{{ $devolucion->id_producto }}</td>
-
-        <td>{{ $devolucion->cantidad }}</td>
-
-        <td>{{ $devolucion->estado }}</td>
-
-        <td>{{ $devolucion->fecha_devolucion }}</td>
-
-        <td>
-
-            <a href="{{ route('devoluciones.edit',$devolucion->id_devolucion) }}"
-               class="btn btn-warning">
-               Editar
             </a>
+        </div>
+    </div>
 
-            <form action="{{ route('devoluciones.destroy',$devolucion->id_devolucion) }}"
-                  method="POST"
-                  style="display:inline">
+    <div class="card-body">
 
-                @csrf
-                @method('DELETE')
+        <table class="table table-bordered table-hover">
 
-                <button class="btn btn-danger">
-                    Eliminar
-                </button>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Venta</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-            </form>
+            <tbody>
 
-        </td>
+                @foreach($devoluciones as $devolucion)
 
-    </tr>
+                    <tr>
 
-    @endforeach
+                        <td>
+                            {{ $devolucion->id_devolucion }}
+                        </td>
 
-    </tbody>
+                        <td>
+                            {{ $devolucion->id_venta }}
+                        </td>
 
-</table>
+                        <td>
+                            {{ $devolucion->id_producto }}
+                        </td>
 
-@endsection
+                        <td>
+                            {{ $devolucion->cantidad }}
+                        </td>
+
+                        <td>
+                            {{ $devolucion->estado }}
+                        </td>
+
+                        <td>
+                            {{ $devolucion->fecha_devolucion }}
+                        </td>
+
+                        <td>
+
+                            <a href="{{ route('devoluciones.edit', $devolucion->id_devolucion) }}"
+                               class="btn btn-warning btn-sm">
+
+                                <i class="fas fa-edit"></i>
+                                Editar
+
+                            </a>
+
+                            <form action="{{ route('devoluciones.destroy', $devolucion->id_devolucion) }}"
+                                  method="POST"
+                                  style="display:inline">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+
+                                    <i class="fas fa-trash"></i>
+                                    Eliminar
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@stop
