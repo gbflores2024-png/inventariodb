@@ -18,6 +18,12 @@ RUN composer install --no-dev --no-scripts \
     --prefer-dist --optimize-autoloader --no-interaction
 
 COPY . .
+# Instalar Node.js y npm
+RUN apt-get update && apt-get install -y nodejs npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependencias y compilar CSS y JavaScript
+RUN npm ci && npm run build
 
 RUN composer dump-autoload --optimize \
     && mkdir -p storage/framework/cache/data \
